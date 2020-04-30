@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    display: border-box;
+}
+.visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+}
+body {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 26px;
+    min-height: 900px;
+}
+header {
+    background: orange;
+    height: 120px;
+    margin: 40px 140px;
+}
+body {
+    display: flex;
+}
