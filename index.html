@@ -1,19 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="index.js" deref></script>
-    <title>MSI 2020</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <title>MSI 2020 - Front-end Development Test</title>
 </head>
+
 <body>
-    <h1 class="visually-hidden">
-        Test Task MSI 2020
-    </h1>
-        <header>
-            MSI 2020
-        </header>
-        <main></main>
+
+    <main>
+        <h1 class="visually-hidden">MSI 2020 - Front-end Development Test</h1>
+        <section class="wrapper">
+            <div class="main">
+                <div class="header">
+                    <div class="logo">MSI 2020</div>
+
+                    <div class="menu">
+                        <!-- <div class="menu_button">
+                            =
+                        </div>
+                        <span class="menu__title">Favourite</span> -->
+                    </div>
+                </div>
+                <div class="greeting">
+                    <h2 class="greeting__title">Hey!</h2>
+                    <p class="greeting__content">Let’s try to find a joke for you:</p>
+                </div>
+                <form class="options">
+                    <div>
+                        <label class="options__radio">
+                            <input type="radio" name="options-radio" value="Random" checked>
+                            <span class="options__radio--icon"></span>
+                            <span class="options__radio--text">Random</span>
+
+                        </label>
+                    </div>
+                    <div>
+                        <label class="options__radio">
+                            <input type="radio" name="options-radio" value="From category">
+                            <span class="options__radio--icon"></span>
+                            <span class="options__radio--text">From categories</span>
+                        </label>
+                    </div>
+                    <div class="options__categories">
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category1</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category2</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category3</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category4</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category5</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category6</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category7</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category8</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category9</span>
+                        </label>
+                        <label class="options__categories--label">
+                            <input type="radio" class="options__categories--input" name="category__radio">
+                            <span class="options__categories--text">Category10</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="options__radio">
+                            <input type="radio" name="options-radio" value="Search">
+                            <span class="options__radio--icon"></span>
+                            <span class="options__radio--text">Search</span>
+                        </label>
+                        <div class="options-rearch">
+                            <input class="buttons-search__input" type="text" placeholder="Free text search...">
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button>Get a joke</button>
+                    </div>
+                </form>
+
+                <div class="joke-wrapper">
+                    <div class="joke-ticket">
+                        <object type="image/svg+xml" class="joke-ticket__fav" data="./img/heart-empty-icon.svg"></object>
+                    </div>
+                </div>
+            </div>
+            <div class="aside">
+                <h2 class="aside__title">Favourite</h2>
+
+            </div>
+
+        </section>
+    </main>
+
 </body>
+
 </html>
