@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="icon" href="./img/chucknorris_logo_coloured_small@2x.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="script.js" defer></script>
     <title>MSI 2020 - Front-end Development Test</title>
 </head>
@@ -20,10 +21,11 @@
                     <div class="logo">MSI 2020</div>
 
                     <div class="menu">
-                        <!-- <div class="menu_button">
-                            =
+                        <div class="menu__icon">
+                            <span class="menu__icon--line first-line"></span>
+                            <span class="menu__icon--line second-line"></span>
                         </div>
-                        <span class="menu__title">Favourite</span> -->
+                        <div class="menu__title">Favourite</div>
                     </div>
                 </div>
                 <div class="greeting">
@@ -31,37 +33,29 @@
                     <p class="greeting__content">Let’s try to find a joke for you:</p>
                 </div>
                 <form class="options">
-                    <div>
-                        <label class="options__radio">
-                            <input type="radio" name="options-radio" value="Random" checked>
-                            <span class="options__radio--icon"></span>
-                            <span class="options__radio--text">Random</span>
 
-                        </label>
-                    </div>
-                    <div>
-                        <label class="options__radio">
-                            <input type="radio" name="options-radio" value="From category">
-                            <span class="options__radio--icon"></span>
-                            <span class="options__radio--text">From categories</span>
-                        </label>
-                    </div>
+                    <input id="random-option" type="radio" name="options-radio" value="Random" checked>
+                    <label for="random-option" class="options__radio"><span class="options__radio--icon"></span>Random</label>
+
+                    <input id="category-option" type="radio" name="options-radio" value="Category">
+                    <label for="category-option" class="options__radio"><span class="options__radio--icon"></span>From categories</label>
+
                     <div class="options__categories">
                         <label class="options__categories--label">
                             <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category1</span>
+                            <span class="options__categories--text">Animal</span>
                         </label>
                         <label class="options__categories--label">
                             <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category2</span>
+                            <span class="options__categories--text">Career</span>
                         </label>
                         <label class="options__categories--label">
                             <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category3</span>
+                            <span class="options__categories--text">celebrity</span>
                         </label>
                         <label class="options__categories--label">
                             <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category4</span>
+                            <span class="options__categories--text">dev</span>
                         </label>
                         <label class="options__categories--label">
                             <input type="radio" class="options__categories--input" name="category__radio">
@@ -88,32 +82,46 @@
                             <span class="options__categories--text">Category10</span>
                         </label>
                     </div>
-                    <div>
-                        <label class="options__radio">
-                            <input type="radio" name="options-radio" value="Search">
-                            <span class="options__radio--icon"></span>
-                            <span class="options__radio--text">Search</span>
-                        </label>
-                        <div class="options-rearch">
-                            <input class="buttons-search__input" type="text" placeholder="Free text search...">
-                        </div>
+
+                    <input id="search-option" type="radio" name="options-radio" value="Search">
+                    <label for="search-option" class="options__radio"><span class="options__radio--icon"></span>Search</label>
+                    <div class="options__search">
+                        <input class="options__search--input" type="text" placeholder="Free text search...">
                     </div>
-                    <div class="button">
-                        <button>Get a joke</button>
-                    </div>
+
+                    <button class="options__button">Get a joke</button>
                 </form>
 
-                <div class="joke-wrapper">
+                <div class="jokes-wrapper">
                     <div class="joke-ticket">
-                        <object type="image/svg+xml" class="joke-ticket__fav" data="./img/heart-empty-icon.svg"></object>
+                        <div class="joke-fav"></div>
+                        <div class="joke">
+                            <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+                            <div class="joke__content">
+                                <div class="joke__content--link">ID: <a class="joke__content--link-id" href="#">XNaAxUduSw6zANDaIEab7A</a></div>
+                                <div class="joke__content--text">No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He must've conceived himself.</div>
+                                <div class="joke__content--info"><span>Last update: <span class=".joke__content--info-date">1923</span> hours ago</span><span class="joke__content--info-category">celebrity</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="aside">
-                <h2 class="aside__title">Favourite</h2>
+                <div class="aside__title">Favourite</div>
+                <div class="aside-joke-ticket">
+                    <div class="joke-fav__aside"></div>
+                    <div class="joke">
+                        <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+                        <div class="joke__content">
+                            <div class="joke__content--link">ID: <a class="joke__content--link-id" href="#">XNaAxUduSw6zANDaIEab7A</a></div>
+                            <div class="joke__content--text-aside">No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He must've conceived himself.</div>
+                            <div class="joke__content--info"><span>Last update: <span class=".joke__content--info-date">1923</span> hours ago</span></div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
-
         </section>
     </main>
 
