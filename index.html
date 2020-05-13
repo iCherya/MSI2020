@@ -12,14 +12,12 @@
 </head>
 
 <body>
-
     <main>
         <h1 class="visually-hidden">MSI 2020 - Front-end Development Test</h1>
         <section class="wrapper">
             <div class="main">
                 <div class="header">
                     <div class="logo">MSI 2020</div>
-
                     <div class="menu">
                         <div class="menu__icon">
                             <span class="menu__icon--line first-line"></span>
@@ -33,77 +31,25 @@
                     <p class="greeting__content">Let’s try to find a joke for you:</p>
                 </div>
                 <form class="options">
-
                     <input id="random-option" type="radio" name="options-radio" value="Random" checked>
-                    <label for="random-option" class="options__radio"><span class="options__radio--icon"></span>Random</label>
-
+                    <label for="random-option" class="options__radio"><span
+                            class="options__radio--icon"></span>Random</label>
                     <input id="category-option" type="radio" name="options-radio" value="Category">
-                    <label for="category-option" class="options__radio"><span class="options__radio--icon"></span>From categories</label>
-
+                    <label for="category-option" class="options__radio"><span class="options__radio--icon"></span>From
+                        categories</label>
                     <div class="options__categories">
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Animal</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Career</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">celebrity</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">dev</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category5</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category6</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category7</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category8</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category9</span>
-                        </label>
-                        <label class="options__categories--label">
-                            <input type="radio" class="options__categories--input" name="category__radio">
-                            <span class="options__categories--text">Category10</span>
-                        </label>
+                        <!-- Here will be list of categories -->
                     </div>
-
                     <input id="search-option" type="radio" name="options-radio" value="Search">
-                    <label for="search-option" class="options__radio"><span class="options__radio--icon"></span>Search</label>
+                    <label for="search-option" class="options__radio"><span
+                            class="options__radio--icon"></span>Search</label>
                     <div class="options__search">
                         <input class="options__search--input" type="text" placeholder="Free text search...">
                     </div>
-
                     <button class="options__button">Get a joke</button>
                 </form>
-
                 <div class="jokes-wrapper">
-                    <div class="joke-ticket">
-                        <div class="joke-fav"></div>
-                        <div class="joke">
-                            <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
-                            <div class="joke__content">
-                                <div class="joke__content--link">ID: <a class="joke__content--link-id" href="#">XNaAxUduSw6zANDaIEab7A</a></div>
-                                <div class="joke__content--text">No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He must've conceived himself.</div>
-                                <div class="joke__content--info"><span>Last update: <span class=".joke__content--info-date">1923</span> hours ago</span><span class="joke__content--info-category">celebrity</span></div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Here will be jokes -->
                 </div>
             </div>
             <div class="aside">
@@ -111,20 +57,21 @@
                 <div class="aside-joke-ticket">
                     <div class="joke-fav__aside"></div>
                     <div class="joke">
-                        <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+                        <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object>
+                        </div>
                         <div class="joke__content">
-                            <div class="joke__content--link">ID: <a class="joke__content--link-id" href="#">XNaAxUduSw6zANDaIEab7A</a></div>
-                            <div class="joke__content--text-aside">No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He must've conceived himself.</div>
-                            <div class="joke__content--info"><span>Last update: <span class=".joke__content--info-date">1923</span> hours ago</span></div>
+                            <div class="joke__content--link">ID: <a class="joke__content--link-id"
+                                    href="#">XNaAxUduSw6zANDaIEab7A</a></div>
+                            <div class="joke__content--text-aside">No one truly knows who's Chuck Norris' real father.
+                                No one is biologically strong enough for this. He must've conceived himself.</div>
+                            <div class="joke__content--info">Last update: 1923 hours ago</div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
+            <div id="spinner"></div>
         </section>
     </main>
-
 </body>
 
 </html>

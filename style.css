@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
 }
 
 body {
@@ -138,16 +137,16 @@ input[type=radio] {
     margin-right: 15px;
 }
 
-input[type=radio]:hover + .options__radio > span {
+input[type=radio]:hover+.options__radio>span {
     background-color: rgb(235, 235, 235);
 }
 
-input[type=radio]:checked + .options__radio > span {
+input[type=radio]:checked+.options__radio>span {
     border: 2px solid #333333;
     background-color: #fff;
 }
 
-input[type=radio]:checked + .options__radio > span:before {
+input[type=radio]:checked+.options__radio>span:before {
     position: absolute;
     top: 3px;
     left: 3px;
@@ -169,9 +168,8 @@ input[type=radio]:checked + .options__radio > span:before {
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #ABABAB;
-
+    cursor: pointer;
     border: 2px solid #F8F8F8;
-
     border-radius: 6px;
 }
 
@@ -179,7 +177,7 @@ input[type=radio]:checked + .options__radio > span:before {
     color: #666;
 }
 
-.options__categories--label > input[type=radio]:checked + span {
+.options__categories--label>input[type=radio]:checked+span {
     color: #333333;
     background: #F8F8F8;
 }
@@ -260,16 +258,16 @@ input[type=radio]:checked + .options__radio > span:before {
     outline: none;
 }
 
-
-
+.empty-data-error {
+    border: 2px solid tomato;
+}
 
 .joke-ticket {
     display: flex;
     flex-direction: column;
-    min-height: 225px;
     background: #F8F8F8;
     border-radius: 20px;
-    margin: 20px 0;
+    margin: 20px 0 0;
     padding: 40px;
 }
 
@@ -301,8 +299,11 @@ input[type=radio]:checked + .options__radio > span:before {
     flex: 0 0 40px;
 }
 
-.joke__content--link {
+.joke__content {
+    width: 100%;
+}
 
+.joke__content--link {
     font-size: 10px;
     line-height: 14px;
     color: #ABABAB;
@@ -310,7 +311,7 @@ input[type=radio]:checked + .options__radio > span:before {
 
 .joke__content--link a {
     -webkit-text-decoration-line: underline;
-            text-decoration-line: underline;
+    text-decoration-line: underline;
     color: #8EA7FF;
 }
 
@@ -320,6 +321,7 @@ input[type=radio]:checked + .options__radio > span:before {
 }
 
 .joke__content--text {
+    max-width: 540px;
     margin-top: 5px;
     margin-bottom: 23px;
     font-size: 18px;
@@ -338,16 +340,14 @@ input[type=radio]:checked + .options__radio > span:before {
 }
 
 .joke__content--info-category {
-
     font-weight: 500;
     letter-spacing: 2px;
+    margin-right: -2px;
     text-transform: uppercase;
     color: #333;
-
     background: #FFFFFF;
     border-radius: 6px;
-    padding: 6px 20px;
-
+    padding: 5px 20px;
 }
 
 .options__categories,
@@ -355,14 +355,10 @@ input[type=radio]:checked + .options__radio > span:before {
     display: none;
 }
 
-input#category-option:checked ~ .options__categories,
-input#search-option:checked ~ .options__search {
+input#category-option:checked~.options__categories,
+input#search-option:checked~.options__search {
     display: block;
 }
-
-
-
-
 
 .aside {
     flex: 0 0 480px;
@@ -418,7 +414,6 @@ input#search-option:checked ~ .options__search {
         padding: 40px;
         flex: 1 1 auto;
     }
-
 }
 
 @media (max-width: 960px) {
@@ -464,7 +459,6 @@ input#search-option:checked ~ .options__search {
 }
 
 @media (max-width: 480px) {
-
     .main,
     .joke-ticket {
         padding: 20px;
@@ -482,23 +476,23 @@ input#search-option:checked ~ .options__search {
     .wrapper {
         min-width: 320px;
     }
+
     .aside__title {
         margin-top: 20px;
     }
 }
 
-
-
-
 /* Spinner for waiting */
 
-.lds-dual-ring {
-    display: inline-block;
+.loading {
+    position: absolute;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
     width: 80px;
     height: 80px;
 }
 
-.lds-dual-ring:after {
+.loading:after {
     content: " ";
     display: block;
     width: 64px;
@@ -507,12 +501,12 @@ input#search-option:checked ~ .options__search {
     border-radius: 50%;
     border: 6px solid #cef;
     border-color: #cef transparent #cef transparent;
-    -webkit-animation: lds-dual-ring 1.2s linear infinite;
-            animation: lds-dual-ring 1.2s linear infinite;
+    -webkit-animation: loading 1.2s linear infinite;
+    animation: loading 1.2s linear infinite;
     box-sizing: border-box;
 }
 
-@-webkit-keyframes lds-dual-ring {
+@-webkit-keyframes loading {
     0% {
         transform: rotate(0deg);
     }
@@ -520,10 +514,9 @@ input#search-option:checked ~ .options__search {
     100% {
         transform: rotate(360deg);
     }
-
 }
 
-@keyframes lds-dual-ring {
+@keyframes loading {
     0% {
         transform: rotate(0deg);
     }
@@ -531,5 +524,4 @@ input#search-option:checked ~ .options__search {
     100% {
         transform: rotate(360deg);
     }
-
 }
