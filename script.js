@@ -1,10 +1,10 @@
 const menu = document.querySelector('.menu'),
     wrapper = document.querySelector('.wrapper'),
     aside = document.querySelector('.aside'),
-    loading = document.querySelector('#spinner'),
     optionsRadio = document.getElementsByName('options-radio'),
     optionsCategories = document.querySelector('.options__categories'),
     searchInput = document.querySelector('.options__search--input');
+
 
 menu.addEventListener('click', () => {
     menu.classList.toggle('menu_active');
@@ -12,12 +12,30 @@ menu.addEventListener('click', () => {
     aside.classList.toggle('aside_active');
 });
 
-//Chucks Norris Jokes API Links
+const linksJoke = {
+    linkRandom : 'https://api.chucknorris.io/jokes/random',
+    linkCategoriesList : 'https://api.chucknorris.io/jokes/categories',
+    linkCategory : 'https://api.chucknorris.io/jokes/random?category=',
+    linkSearch : 'https://api.chucknorris.io/jokes/search?query=',
+};
 
-const linkRandom = 'https://api.chucknorris.io/jokes/random',
-    linkCatogiesList = 'https://api.chucknorris.io/jokes/categories',
-    linkCategory = 'https://api.chucknorris.io/jokes/random?category=',
-    linkSearch = 'https://api.chucknorris.io/jokes/search?query=';
+function createElement(tagName, props = {}, elInnerHTML) {
+    const $el = document.createElement(tagName);
+
+    for (const propName in props) {
+        if (propName === 'children' && props.children) {
+            $el.append(...props.children);
+        } else if (typeof props[propName] !== 'undefined') {
+            $el[propName] = props[propName];
+        }
+    }
+
+    if (elInnerHTML) {
+        $el.innerHTML = elInnerHTML;
+    }
+
+    return $el;
+}
 
 
 function getHoursLastUpdate(date) {
@@ -26,42 +44,46 @@ function getHoursLastUpdate(date) {
 }
 
 function randomInteger(max) {
-  let rand = Math.random() * (max + 1);
-  return Math.floor(rand);
+  return Math.floor(Math.random() * (max + 1));
 }
 
-// Receive jokes categories list from API
+const loading = createElement(
+    'div',
+    {
+        className: 'loading'
+    }
+);
+
+const tooltip = createElement(
+    'div',
+    {
+        className: 'tooltip-search'
+    },
+    'Search query must be between 3 and 120 characters'
+);
+
 
 let isCatogiesListReceived = false;
 document.querySelector('#category-option').onclick = function () {
     if (!isCatogiesListReceived) {
-        loading.classList.add('loading');
-        let request = fetch(linkCatogiesList)
+        wrapper.appendChild(loading);
+            fetch(linksJoke.linkCategoriesList)
             .then(response => response.json())
             .then(body => {
-
                 for (let i = 0; i < body.length; i++) {
                     createCatogiesList(body[i]);
                 }
-                loading.classList.remove('loading');
+                wrapper.removeChild(loading);
             })
-            .catch(() => {
-                console.log('error');
-
-                alert('Missed connection with server. Wait a minute, reload the page and try again');
-                loading.classList.remove('loading');
-            });
-
+            ;
         isCatogiesListReceived = true;
     }
 };
 
-// Get URL for API + checking
-
 function getUrlFromChoosenOption() {
     let url;
     if (optionsRadio[0].checked) {
-        url = linkRandom;
+        url = linksJoke.linkRandom;
     } else if (optionsRadio[1].checked) {
         let categories = document.getElementsByName('category__radio');
         let category;
@@ -72,41 +94,38 @@ function getUrlFromChoosenOption() {
         }
         if (category != undefined) {
             optionsCategories.classList.remove('empty-data-error');
-            url = linkCategory + category;
+            url = linksJoke.linkCategory + category;
         } else {
             optionsCategories.classList.add('empty-data-error');
         }
     } else if (optionsRadio[2].checked) {
         let query = searchInput.value.trim();
-        if (query !== '') {
+        if (query.length > 2 && query.length < 121) {
+            if (document.querySelector('.tooltip-search')) {
+            document.querySelector('.options__search').removeChild(tooltip);
+            }
             searchInput.classList.remove('empty-data-error');
-            url = linkSearch + query;
+            url = linksJoke.linkSearch + query;
         } else {
+            document.querySelector('.options__search').appendChild(tooltip);
             searchInput.classList.add('empty-data-error');
         }
-
     }
     return url;
 }
-
-// Requests jokes
 
 document.querySelector('.options__button').addEventListener("click", function (event) {
     event.preventDefault();
     let url = getUrlFromChoosenOption();
     if (url !== undefined) {
-        loading.classList.add('loading');
-        let request = fetch(url)
+        wrapper.appendChild(loading);
+            fetch(url)
             .then(response => response.json())
             .then(body => {
                 if (body.total === 0) {
-                    createJoke(
-                        'No joke ID',
-                        '#',
-                        '0',
-                        `Sorry. We can not find any joke from your search query \"${searchInput.value}\". Please, try again with another one.`,
+                    createMissedJoke(
+                        `Sorry. We can not find any joke with your search query \"${searchInput.value.trim()}\". Please, try again with another one.`
                     );
-
                 } else if (body.total == undefined) {
                     createJoke(
                         body.id,
@@ -117,7 +136,6 @@ document.querySelector('.options__button').addEventListener("click", function (e
                     );
                 } else if (body.total > 0) {
                     let randJoke = randomInteger(body.total - 1);
-
                     createJoke(
                         body.result[randJoke].id,
                         body.result[randJoke].url,
@@ -126,47 +144,140 @@ document.querySelector('.options__button').addEventListener("click", function (e
                         body.result[randJoke].categories
                     );
                 }
-
-                loading.classList.remove('loading');
+                wrapper.removeChild(loading);
             })
             .catch(() => {
-                console.log('error');
-
                 alert('Missed connection with server. Wait a minute, reload the page and try again');
-                loading.classList.remove('loading');
+                wrapper.removeChild(loading);
             });
     }
 });
 
-// Create categories
-
 function createCatogiesList(category) {
-  let newCategory = document.createElement('label');
-  newCategory.classList.add('options__categories--label');
-  newCategory.innerHTML = `<input type="radio" class="options__categories--input" name="category__radio" value="${category}">
-                          <span class="options__categories--text">${category}</span>`;
-  document.querySelector('.options__categories').insertAdjacentElement('beforeend', newCategory);
+    let newCategory = createElement(
+        'label',
+        {
+            className: 'options__categories--label'
+        },
+        `<input type="radio" class="options__categories--input" name="category__radio" value="${category}">
+        <span class="options__categories--text">${category}</span>`
+    );
+    document.querySelector('.options__categories').insertAdjacentElement('beforeend', newCategory);
 }
 
-// Create Jokes
-
-function createJoke(id, link, date, text, category = '') {
-  let newJoke = document.createElement("div");
-  newJoke.classList.add('joke-ticket');
-
-  if (category !== '') {
-      category = `<div class="joke__content--info-category">${category}</div>`;
-  }
-
-  newJoke.innerHTML = `<div class="joke-fav"></div>
-                      <div class="joke">
-                          <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
-                          <div class="joke__content">
-                              <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${link}" target="_blank">${id}</a></div>
-                              <div class="joke__content--text">${text}</div>
-                              <div class="joke__content--info"><span>Last update: ${date} hours ago</span>${category}</div>
-                            </div>
-                       </div>`
-
-  document.querySelector('.jokes-wrapper').insertAdjacentElement('afterbegin', newJoke);
+function createJoke(id, link, date, text, category) {
+    if (category) {
+        category = `<div class="joke__content--info-category">${category}</div>`;
+    }
+    let newJoke = createElement(
+        'div',
+        {},
+        `<div class="joke-ticket" data-id="${id}">
+        <div title="Add to favorites" class="joke-fav" data-id="${id}"></div>
+        <div class="joke">
+            <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+            <div class="joke__content">
+                <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${link}">${id}</a></div>
+                <div class="joke__content--text">${text}</div>
+                <div class="joke__content--info"><span>Last update: <span class="joke__content--info-date">${date}</span> hours ago</span>${category}</div>
+            </div>
+        </div>
+        </div>`
+    );
+    document.querySelector('.jokes-wrapper').insertAdjacentElement('afterbegin', newJoke);
 }
+
+function createMissedJoke(text) {
+    let newMissedJoke = createElement (
+        'div',
+        {
+            className: 'joke-ticket missed-joke'
+        },
+        `<div class="joke">
+        <div class="joke__icon"><object type="image/svg+xml" data="./img/message-missed-icon.svg"></object></div>
+        <div class="joke__content">
+            <div class="joke__content--text">${text}</div>
+        </div>
+        </div>`
+    );
+    document.querySelector('.jokes-wrapper').insertAdjacentElement('afterbegin', newMissedJoke);
+}
+
+// FAVOURITES //
+
+if (JSON.parse(localStorage.getItem('favourites')) == null) {
+    var favouritesObj = {};
+} else {
+    var favouritesObj = JSON.parse(localStorage.getItem('favourites'))
+};
+
+document.addEventListener('click', function (event) {
+    if (!event.target.closest('.joke-fav')) return;
+    let idJoke = event.target.dataset.id;
+        if (idJoke in favouritesObj) {
+            deleteFromFavouritesObj(idJoke);
+        } else {
+            addToFavouritesObj(idJoke);
+        }
+});
+
+function deleteFromFavouritesObj(idJoke) {
+    let jokeTicket = document.querySelectorAll(`[data-id="${idJoke}"]`);
+    if (jokeTicket.length === 2) {
+        jokeTicket[0].remove();
+    } else {
+        jokeTicket[2].remove();
+        jokeTicket[1].classList.toggle('joke-fav__aside');
+    }
+    delete favouritesObj[idJoke];
+    createFavoriteJoke();
+};
+
+function addToFavouritesObj(idJoke) {
+    let jokeTicket = document.querySelector(`[data-id="${idJoke}"]`);
+    jokeTicket.querySelector('.joke-fav').classList.toggle('joke-fav__aside');
+    let jokeText = jokeTicket.querySelector('.joke__content--text').textContent,
+        jokeLink = jokeTicket.querySelector('a[href]').textContent,
+        jokeDate = jokeTicket.querySelector('.joke__content--info-date').textContent
+        ;
+    favouritesObj[idJoke] = {
+        idFav: idJoke,
+        textFav: jokeText,
+        linkFav: jokeLink,
+        timeUpdFav: jokeDate,
+    }
+    createFavoriteJoke();
+}
+
+function clearFavs() {
+    let wrapper = document.querySelector('.aside-joke-wrapper'),
+    child = wrapper.firstChild;
+    while (child) {
+        wrapper.removeChild(child);
+        child = wrapper.firstChild;
+    };
+}
+
+function createFavoriteJoke() {
+    clearFavs();
+    for (key in favouritesObj) {
+        let newFavoriteJoke = createElement(
+            'div',
+            {},
+            `<div class="aside-joke-ticket" data-id="${favouritesObj[key].idFav}">
+                <div title="Remove from favorites" class="joke-fav joke-fav__aside" data-id="${favouritesObj[key].idFav}"></div>
+                <div class="joke">
+                    <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+                    <div class="joke__content">
+                        <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${favouritesObj[key].linkFav}">${favouritesObj[key].idFav}</a></div>
+                        <div class="joke__content--text-aside">${favouritesObj[key].textFav}</div>
+                        <div class="joke__content--info">Last update: ${favouritesObj[key].timeUpdFav} hours ago</div>
+                    </div>
+                </div>
+            </div>`
+        );
+        document.querySelector('.aside-joke-wrapper').insertAdjacentElement('afterbegin', newFavoriteJoke);
+    }
+    localStorage.setItem('favourites', JSON.stringify(favouritesObj));
+}
+createFavoriteJoke();

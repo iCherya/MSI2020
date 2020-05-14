@@ -231,6 +231,11 @@ input[type=radio]:checked+.options__radio>span:before {
     outline: none;
 }
 
+.tooltip-search {
+    color: tomato;
+    font-size: .8em;
+}
+
 .options__button {
     margin-top: 10px;
     font-family: 'Roboto', sans-serif;
@@ -277,6 +282,7 @@ input[type=radio]:checked+.options__radio>span:before {
     transition: .3s;
     width: 20px;
     height: 17px;
+    cursor: pointer;
 }
 
 .joke-fav:hover {
@@ -401,6 +407,7 @@ input#search-option:checked~.options__search {
     transition: .3s;
     width: 20px;
     height: 17px;
+    cursor: pointer;
 }
 
 .joke-fav__aside:hover {
@@ -408,6 +415,9 @@ input#search-option:checked~.options__search {
     transition: .3s;
 }
 
+.missed-joke {
+    background: #FFC3BB;
+}
 
 @media (max-width: 1240px) {
     .main {
