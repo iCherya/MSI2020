@@ -1,25 +1,33 @@
 const menu = document.querySelector('.menu'),
     wrapper = document.querySelector('.wrapper'),
     aside = document.querySelector('.aside'),
+    main = document.querySelector('.main'),
     optionsRadio = document.getElementsByName('options-radio'),
     optionsCategories = document.querySelector('.options__categories'),
-    searchInput = document.querySelector('.options__search--input');
+    searchInput = document.querySelector('.options__search--input')
+;
 
 
 menu.addEventListener('click', () => {
     menu.classList.toggle('menu_active');
-    wrapper.classList.toggle('wrapper_innactive');
     aside.classList.toggle('aside_active');
+    wrapper.classList.toggle('block_innactive');
+    fullHeightAside();
 });
-
-
+console.dir(aside);
 const linksJoke = {
     linkRandom : 'https://api.chucknorris.io/jokes/random',
     linkCategoriesList : 'https://api.chucknorris.io/jokes/categories',
     linkCategory : 'https://api.chucknorris.io/jokes/random?category=',
     linkSearch : 'https://api.chucknorris.io/jokes/search?query=',
 };
-
+function fullHeightAside() {
+    if (document.querySelector('.aside_active')) {
+        if (main.scrollHeight > aside.scrollHeight) {
+            aside.classList.toggle('height');
+        }
+    }
+}
 function createElement(tagName, props = {}, elInnerHTML) {
     const $el = document.createElement(tagName);
 
@@ -125,7 +133,7 @@ document.querySelector('.options__button').addEventListener("click", function (e
             .then(body => {
                 if (body.total === 0) {
                     createMissedJoke(
-                        `Sorry. We can not find any joke with your search query \"${searchInput.value.trim()}\". Please, try again with another search request.`
+                        `Sorry. We can not find any joke with your search query \"${searchInput.value.trim()}\". Please, try again with another one.`
                     );
                 } else if (body.total == undefined) {
                     createJoke(
@@ -146,7 +154,10 @@ document.querySelector('.options__button').addEventListener("click", function (e
                     );
                 }
                 wrapper.removeChild(loading);
-            });
+            }
+            )
+            .catch(() => alert('Internet connection is not as fast as Chuck Norris. Please press the button a little slower (c) Chuck')
+            );
     }
 });
 
@@ -163,9 +174,10 @@ function createCatogiesList(category) {
 }
 
 function createJoke(id, link, date, text, category) {
-    if (category) {
+    if (category.length !== 0) {
         category = `<div class="joke__content--info-category">${category}</div>`;
     }
+
     let newJoke = createElement(
         'div',
         {},
@@ -174,9 +186,12 @@ function createJoke(id, link, date, text, category) {
         <div class="joke">
             <div class="joke__icon"></div>
             <div class="joke__content">
-                <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${link}">${id}</a></div>
+                <div class="joke__content--link">ID: <a class="joke__content--link-id" target="blank_" href="${link}">${id}</a></div>
                 <div class="joke__content--text">${text}</div>
-                <div class="joke__content--info"><span>Last update: <span class="joke__content--info-date">${date}</span> hours ago</span>${category}</div>
+                <div class="joke__content--info">
+                    <span>Last update: <span class="joke__content--info-date">${date}</span> hours ago</span>
+                    ${category}
+                </div>
             </div>
         </div>
         </div>`
@@ -222,6 +237,7 @@ function deleteFromFavouritesObj(idJoke) {
     let jokeTicket = document.querySelectorAll(`[data-id="${idJoke}"]`);
     if (jokeTicket.length === 2) {
         jokeTicket[0].remove();
+
     } else {
         jokeTicket[2].remove();
         jokeTicket[1].classList.toggle('joke-fav__aside');
@@ -266,7 +282,7 @@ function createFavoriteJoke() {
                 <div class="joke">
                     <div class="joke__icon"></div>
                     <div class="joke__content">
-                        <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${favouritesObj[key].linkFav}">${favouritesObj[key].idFav}</a></div>
+                        <div class="joke__content--link">ID: <a class="joke__content--link-id" target="blank_" href="${favouritesObj[key].linkFav}">${favouritesObj[key].idFav}</a></div>
                         <div class="joke__content--text-aside">${favouritesObj[key].textFav}</div>
                         <div class="joke__content--info">Last update: ${favouritesObj[key].timeUpdFav} hours ago</div>
                     </div>
@@ -276,5 +292,10 @@ function createFavoriteJoke() {
         document.querySelector('.aside-joke-wrapper').insertAdjacentElement('afterbegin', newFavoriteJoke);
     }
     localStorage.setItem('favourites', JSON.stringify(favouritesObj));
+
+    if (Object.keys(favouritesObj).length == 0) {
+        let nothingInFav = createElement('div', {className: 'nothing-in-fav'}, 'You have not chosen anything yet. Hurry up, Chuck Norris is VERY upset!');
+        document.querySelector('.aside-joke-wrapper').insertAdjacentElement('afterbegin', nothingInFav);
+    }
 }
 createFavoriteJoke();
