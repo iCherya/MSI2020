@@ -12,6 +12,7 @@ menu.addEventListener('click', () => {
     aside.classList.toggle('aside_active');
 });
 
+
 const linksJoke = {
     linkRandom : 'https://api.chucknorris.io/jokes/random',
     linkCategoriesList : 'https://api.chucknorris.io/jokes/categories',
@@ -37,14 +38,14 @@ function createElement(tagName, props = {}, elInnerHTML) {
     return $el;
 }
 
-
 function getHoursLastUpdate(date) {
-  let currentTime = new Date();
-  return Math.round((currentTime.getTime() - Date.parse(date)) / (1000 * 60 * 60));
-}
+    let currentTime = new Date(),
+        jokeUpdateTime = new Date(date.replace(/-/g,'/').replace('T',' ').replace(/\..*|\+.*/,""));
+    return Math.round((currentTime.getTime() - jokeUpdateTime.getTime()) / (1000 * 60 * 60));
+  }
 
 function randomInteger(max) {
-  return Math.floor(Math.random() * (max + 1));
+    return Math.floor(Math.random() * (max + 1));
 }
 
 const loading = createElement(
@@ -124,7 +125,7 @@ document.querySelector('.options__button').addEventListener("click", function (e
             .then(body => {
                 if (body.total === 0) {
                     createMissedJoke(
-                        `Sorry. We can not find any joke with your search query \"${searchInput.value.trim()}\". Please, try again with another one.`
+                        `Sorry. We can not find any joke with your search query \"${searchInput.value.trim()}\". Please, try again with another search request.`
                     );
                 } else if (body.total == undefined) {
                     createJoke(
@@ -144,10 +145,6 @@ document.querySelector('.options__button').addEventListener("click", function (e
                         body.result[randJoke].categories
                     );
                 }
-                wrapper.removeChild(loading);
-            })
-            .catch(() => {
-                alert('Missed connection with server. Wait a minute, reload the page and try again');
                 wrapper.removeChild(loading);
             });
     }
@@ -175,7 +172,7 @@ function createJoke(id, link, date, text, category) {
         `<div class="joke-ticket" data-id="${id}">
         <div title="Add to favorites" class="joke-fav" data-id="${id}"></div>
         <div class="joke">
-            <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+            <div class="joke__icon"></div>
             <div class="joke__content">
                 <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${link}">${id}</a></div>
                 <div class="joke__content--text">${text}</div>
@@ -193,11 +190,11 @@ function createMissedJoke(text) {
         {
             className: 'joke-ticket missed-joke'
         },
-        `<div class="joke">
-        <div class="joke__icon"><object type="image/svg+xml" data="./img/message-missed-icon.svg"></object></div>
-        <div class="joke__content">
-            <div class="joke__content--text">${text}</div>
-        </div>
+        `<div class="joke missed">
+            <div class="joke__icon joke__icon-missed"></div>
+            <div class="joke__content">
+                <div class="joke__content--text  missed">${text}</div>
+            </div>
         </div>`
     );
     document.querySelector('.jokes-wrapper').insertAdjacentElement('afterbegin', newMissedJoke);
@@ -237,7 +234,7 @@ function addToFavouritesObj(idJoke) {
     let jokeTicket = document.querySelector(`[data-id="${idJoke}"]`);
     jokeTicket.querySelector('.joke-fav').classList.toggle('joke-fav__aside');
     let jokeText = jokeTicket.querySelector('.joke__content--text').textContent,
-        jokeLink = jokeTicket.querySelector('a[href]').textContent,
+        jokeLink = jokeTicket.querySelector('a[href]').href,
         jokeDate = jokeTicket.querySelector('.joke__content--info-date').textContent
         ;
     favouritesObj[idJoke] = {
@@ -267,7 +264,7 @@ function createFavoriteJoke() {
             `<div class="aside-joke-ticket" data-id="${favouritesObj[key].idFav}">
                 <div title="Remove from favorites" class="joke-fav joke-fav__aside" data-id="${favouritesObj[key].idFav}"></div>
                 <div class="joke">
-                    <div class="joke__icon"><object type="image/svg+xml" data="./img/message-icon.svg"></object></div>
+                    <div class="joke__icon"></div>
                     <div class="joke__content">
                         <div class="joke__content--link">ID: <a class="joke__content--link-id" href="${favouritesObj[key].linkFav}">${favouritesObj[key].idFav}</a></div>
                         <div class="joke__content--text-aside">${favouritesObj[key].textFav}</div>

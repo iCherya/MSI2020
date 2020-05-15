@@ -284,11 +284,11 @@ input[type=radio]:checked+.options__radio>span:before {
     height: 17px;
     cursor: pointer;
 }
-
+/*
 .joke-fav:hover {
     background: url("./img/heart-full-icon.svg");
     transition: .3s;
-}
+} */
 
 .joke {
     margin-top: 10px;
@@ -297,6 +297,7 @@ input[type=radio]:checked+.options__radio>span:before {
 
 .joke__icon {
     background-color: #fff;
+    background: url("./img/message-icon.svg") no-repeat center center;
     border-radius: 50%;
     height: 40px;
     display: flex;
@@ -409,14 +410,24 @@ input#search-option:checked~.options__search {
     height: 17px;
     cursor: pointer;
 }
-
+/*
 .joke-fav__aside:hover {
     background: url("./img/heart-empty-icon.svg");
     transition: .3s;
-}
+} */
 
 .missed-joke {
     background: #FFC3BB;
+}
+
+.joke__icon-missed {
+    background: url("./img/message-missed-icon.svg") no-repeat center center;
+    background-color: #fff;
+    align-self: center;
+}
+
+.missed {
+    margin: 0;
 }
 
 @media (max-width: 1240px) {
@@ -432,13 +443,14 @@ input#search-option:checked~.options__search {
         position: absolute;
         top: 0;
         right: 0;
-        height: 100vh;
+        min-height: 100vh;
         z-index: 3;
     }
 
     .aside .aside__title {
         visibility: hidden;
     }
+
 
     .menu {
         display: flex;
@@ -453,11 +465,13 @@ input#search-option:checked~.options__search {
 
     .aside_active {
         display: block;
+        width: 480px;
     }
+
 
     .wrapper_innactive:after {
         content: '';
-        height: 100vh;
+        min-height: 100vh;
         position: absolute;
         top: 0;
         left: 0;
@@ -479,7 +493,10 @@ input#search-option:checked~.options__search {
         width: 100%;
     }
 
-    .aside .aside-joke-ticket {
+    .aside-joke-ticket {
+        width: 100%;
+    }
+    .aside-joke-wrapper {
         width: 100%;
     }
 
@@ -490,6 +507,7 @@ input#search-option:checked~.options__search {
     .aside__title {
         margin-top: 20px;
     }
+
 }
 
 /* Spinner for waiting */
