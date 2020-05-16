@@ -262,7 +262,10 @@ input[type=radio]:checked+.options__radio>span:before {
 .options__button:focus {
     outline: none;
 }
-
+.options__button:disabled,
+.options__button[disabled] {
+    background: linear-gradient(92.01deg, rgb(184, 184, 184) 0%, rgb(124, 124, 124) 100%);
+}
 .empty-data-error {
     border: 2px solid tomato;
 }
@@ -284,11 +287,6 @@ input[type=radio]:checked+.options__radio>span:before {
     height: 17px;
     cursor: pointer;
 }
-/*
-.joke-fav:hover {
-    background: url("./img/heart-full-icon.svg");
-    transition: .3s;
-} */
 
 .joke {
     margin-top: 10px;
@@ -413,11 +411,6 @@ input#search-option:checked~.options__search {
     height: 17px;
     cursor: pointer;
 }
-/*
-.joke-fav__aside:hover {
-    background: url("./img/heart-empty-icon.svg");
-    transition: .3s;
-} */
 
 .missed-joke {
     background: #FFC3BB;
@@ -575,6 +568,10 @@ input#search-option:checked~.options__search {
     .joke__content--text-aside {
         max-width: calc(100vw - 142px);
     }
+    .nothing-in-fav {
+        width: 100%;
+    }
+
 }
 @media (max-width: 320px) {
     .joke__content--text {

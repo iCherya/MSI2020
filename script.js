@@ -14,7 +14,7 @@ menu.addEventListener('click', () => {
     wrapper.classList.toggle('block_innactive');
     fullHeightAside();
 });
-console.dir(aside);
+
 const linksJoke = {
     linkRandom : 'https://api.chucknorris.io/jokes/random',
     linkCategoriesList : 'https://api.chucknorris.io/jokes/categories',
@@ -125,6 +125,7 @@ function getUrlFromChoosenOption() {
 
 document.querySelector('.options__button').addEventListener("click", function (event) {
     event.preventDefault();
+    this.disabled = true;
     let url = getUrlFromChoosenOption();
     if (url !== undefined) {
         wrapper.appendChild(loading);
@@ -154,11 +155,21 @@ document.querySelector('.options__button').addEventListener("click", function (e
                     );
                 }
                 wrapper.removeChild(loading);
+                this.disabled = false;
+
             }
             )
-            .catch(() => alert('Internet connection is not as fast as Chuck Norris. Please press the button a little slower (c) Chuck')
-            );
+            .catch(() => {
+                alert('Internet connection is not as fast as Chuck Norris. Please try again later')
+                wrapper.removeChild(loading);
+                this.disabled = false;
+            });
+
+
+    } else {
+        this.disabled = false;
     }
+
 });
 
 function createCatogiesList(category) {
@@ -177,12 +188,17 @@ function createJoke(id, link, date, text, category) {
     if (category.length !== 0) {
         category = `<div class="joke__content--info-category">${category}</div>`;
     }
-
+    let heartIcon;
+    if (id in favouritesObj) {
+        heartIcon = `<div title="Remove from favorites" class="joke-fav joke-fav__aside" data-id="${id}"></div>`
+    } else {
+        heartIcon = `<div title="Add to favorites" class="joke-fav" data-id="${id}"></div>`
+    }
     let newJoke = createElement(
         'div',
         {},
         `<div class="joke-ticket" data-id="${id}">
-        <div title="Add to favorites" class="joke-fav" data-id="${id}"></div>
+        ${heartIcon}
         <div class="joke">
             <div class="joke__icon"></div>
             <div class="joke__content">
