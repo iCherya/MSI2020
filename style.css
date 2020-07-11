@@ -271,10 +271,12 @@ input[type=radio]:checked+.options__radio>span:before {
 .options__button:focus {
     outline: none;
 }
+
 .options__button:disabled,
 .options__button[disabled] {
     background: linear-gradient(92.01deg, rgb(184, 184, 184) 0%, rgb(124, 124, 124) 100%);
 }
+
 .empty-data-error {
     border: 2px solid tomato;
 }
@@ -434,6 +436,7 @@ input[type=radio]:checked+.options__radio>span:before {
 .missed {
     margin: 0;
 }
+
 .nothing-in-fav {
     width: 400px;
     margin-top: 20px;
@@ -447,6 +450,7 @@ input[type=radio]:checked+.options__radio>span:before {
     border-radius: 10px;
     box-sizing: border-box;
 }
+
 .block_innactive:after {
     content: '';
     position: absolute;
@@ -456,6 +460,23 @@ input[type=radio]:checked+.options__radio>span:before {
     bottom: 0;
     z-index: 2;
 }
+
+
+.contacts-links {
+    text-align: center;
+    font-size: 0;
+    margin-top: 2rem;
+}
+
+.contacts-links svg {
+    margin: 0 5px;
+}
+
+.contacts-links svg:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
 /* Spinner for waiting */
 
 .loading {
@@ -480,9 +501,11 @@ input[type=radio]:checked+.options__radio>span:before {
     animation: loading 1.2s linear infinite;
     box-sizing: border-box;
 }
+
 .height {
     height: 100%;
 }
+
 @-webkit-keyframes loading {
     0% {
         transform: rotate(0deg);
@@ -508,10 +531,12 @@ input[type=radio]:checked+.options__radio>span:before {
         padding: 40px;
         flex: 1 1 auto;
     }
+
     .joke__content--text {
         max-width: calc(100vw - 700px);
     }
 }
+
 
 @media (max-width: 960px) {
     .aside {
@@ -539,7 +564,7 @@ input[type=radio]:checked+.options__radio>span:before {
 
     .aside_active {
         display: block;
-        box-shadow: 0 0 0 9999px rgba(0,0,0, 0.3);
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.3);
         min-height: 100vh;
     }
 
@@ -549,6 +574,7 @@ input[type=radio]:checked+.options__radio>span:before {
 }
 
 @media (max-width: 480px) {
+
     .main,
     .joke-ticket {
         padding: 20px;
@@ -563,6 +589,7 @@ input[type=radio]:checked+.options__radio>span:before {
     .aside-joke-ticket {
         width: 100%;
     }
+
     .aside-joke-wrapper {
         width: 100%;
     }
@@ -574,17 +601,21 @@ input[type=radio]:checked+.options__radio>span:before {
     .aside__title {
         margin-top: 20px;
     }
+
     .joke__content--text {
         max-width: calc(100vw - 140px);
     }
+
     .joke__content--text-aside {
         max-width: calc(100vw - 142px);
     }
+
     .nothing-in-fav {
         width: 100%;
     }
 
 }
+
 @media (max-width: 320px) {
     .joke__content--text {
         max-width: 180px;
